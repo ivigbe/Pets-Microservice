@@ -11,22 +11,6 @@ module.exports = async (app) => {
     app.use(express.urlencoded({ extended: true, limit: '1mb'}));
     app.use(cors());
 
-    // const swaggerOptions = {
-    //     swaggerDefinition: {
-    //       info: {
-    //         version: "1.0.0",
-    //         title: "Pets API",
-    //         description: "Pets API",
-    //         servers: [{
-    //           url: "http://localhost:4000/v1",
-    //           description: "Development server"
-    //         }]
-    //       }
-    //     },
-    //     apis: ["src/api/*.js"]
-    // };
-      
-    // const swaggerDocs = swaggerJsDoc(swaggerOptions);
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJsDoc));
 
     //api
