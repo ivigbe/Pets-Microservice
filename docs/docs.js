@@ -1,6 +1,6 @@
-const createPet = require('./pets/createPet');
+const registerPet = require('./pets/registerPet');
 const petsKPI = require('./pets/petsKPI');
-const listPets = require('./pets/listPets');
+const listRegisteredPets = require('./pets/listRegisteredPets');
 
 module.exports = {
   openapi: '3.0.0',
@@ -15,8 +15,8 @@ module.exports = {
     }
   ],
   paths: {
-    '/pets/createPet': createPet,
-    '/pets': listPets,
+    '/pets/registerPet': registerPet,
+    '/pets': listRegisteredPets,
     '/pets/kpi': petsKPI,
   },
   components: {

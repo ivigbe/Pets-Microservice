@@ -10,7 +10,7 @@ module.exports = {
         ],
         responses: {
             201: {
-                description: 'New pet added',
+                description: 'New pet registered',
                 content: {
                     'application/json': {
                         schema: {
@@ -41,7 +41,7 @@ module.exports = {
                 description: 'Bad request',
             },
             500: {
-                description: 'Create pet error',
+                description: 'Register pet error',
                 schema: {
                     $ref: '#/components/schemas/error',
                 },
