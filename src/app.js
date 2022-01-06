@@ -2,6 +2,7 @@ const express = require('express');
 const cors  = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('../docs/docs');
+const errorHandler = require('./utils/errorHandler');
 const { pets } = require('./api');
 
 
@@ -15,4 +16,6 @@ module.exports = async (app) => {
 
     //api
     pets(app);
+
+    app.use(errorHandler);
 }

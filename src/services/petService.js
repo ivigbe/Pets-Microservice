@@ -1,6 +1,6 @@
 const { KPIManager, KPIForPets, PetRepository } = require("../database");
+const ValidationError = require('../utils/validationError');
 const { v4: uuidv4 } = require('uuid');
-const { APIError, ValidationError } = require('../utils/appErrors');
 
 class PetService {
 
@@ -12,31 +12,31 @@ class PetService {
 
     async registerPet(petObject) {
 
-        const { name, genre } = petObject;
-
         try {
 
-            await this.validatePet(name, genre);
+            await this._validatePet(petObject);
 
             petObject.id = uuidv4();
+            petObject.birthDate = new Date(petObject.birthDate).toISOString();
 
             const newPet = await this.repository.registerPet(petObject);
 
             return newPet;
 
         } catch (err) {
-            throw new APIError('There was an error while trying to register the new pet', err)
+            throw err;
         }
     }
 
-    async validatePet(name, genre) {
-        const existingPet = await this.repository.findPetByName({ name });
+    async _validatePet(petObject) {
+        if ((new Date(petObject.birthDate) === "Invalid Date") || isNaN(new Date(petObject.birthDate)))
+            throw new ValidationError('Invalid birth date');
 
-        if (existingPet)
-            throw new ValidationError('Pet already exist');
+        if (!this.genres.includes(petObject.genre))
+            throw new ValidationError('Invalid genre');
 
-        if (!this.genres.includes(genre))
-            throw new ValidationError('Invalid Genre');
+        if (isNaN(petObject.age) || !(Number.isInteger(petObject.age) && petObject.age > 0))
+            throw new ValidationError('Invalid age');
     }
 
     async getAllRegisteredPets() {
@@ -47,7 +47,7 @@ class PetService {
             return allPets;
 
         } catch (err) {
-            throw new APIError('There was an error while trying to get all registered pets', err)
+            throw err;
         }
     }
 
@@ -64,7 +64,7 @@ class PetService {
             return petsKPI;
 
         } catch (err) {
-            throw new APIError('There was an error while trying to get KPI for pets', err)
+            throw err;
         }
     }
 }
