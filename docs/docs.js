@@ -12,6 +12,10 @@ module.exports = {
     {
       url: 'http://localhost:4000/v1',
       description: 'Development server',
+    },
+    {
+      url: 'http://pets-api.eba-ipyzeaf2.us-east-1.elasticbeanstalk.com',
+      description: 'Production server',
     }
   ],
   paths: {
