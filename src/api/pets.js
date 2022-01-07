@@ -31,7 +31,8 @@ module.exports = (app) => {
     app.get('/pets/kpi', async (req, res, next) => {
 
         try {
-            const kpis = await service.getPetsKPI();
+            const { species } = req.body;
+            const kpis = await service.getPetsKPI(species);
 
             return res.status(200).json(kpis);
 

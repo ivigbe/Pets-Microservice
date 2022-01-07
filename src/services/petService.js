@@ -51,15 +51,15 @@ class PetService {
         }
     }
 
-    async getPetsKPI() {
+    async getPetsKPI(selectedSpecies) {
 
         try {
-            const kpiForPets = new KPIForPets();
+            const kpiForPets = new KPIForPets(selectedSpecies);
             this.kpiManager.setKPIToManage(kpiForPets);
 
             const pets = await this.repository.getAllRegisteredPets();
 
-            const petsKPI = await this.kpiManager.calculateKPI(pets);
+            const petsKPI = this.kpiManager.calculateKPI(pets);
             
             return petsKPI;
 
